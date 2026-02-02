@@ -203,6 +203,9 @@ zone.addEventListener("pointermove", e => {
 noBtn.addEventListener("click", e => e.preventDefault());  
   
 yesBtn.addEventListener("click", () => {  
+  // Change the main header text  
+  document.querySelector("h1").textContent = "You are subscribed for a lifetime now ❤️";  
+    
   zone.style.display = "none";  
   hint.style.display = "none";  
   result.style.display = "block";  
@@ -217,3 +220,4 @@ surpriseBtn.addEventListener("click", () => {
 </script>  
 </body>  
 </html>  
+
