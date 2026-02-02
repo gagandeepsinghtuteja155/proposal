@@ -21,7 +21,7 @@ body {
   place-items: center;  
   background: radial-gradient(circle at top, var(--bg2), var(--bg1));  
   font-family: system-ui, sans-serif;  
-  overflow: hidden;  
+  overflow-x: hidden;  
   padding: 16px;  
   transition: background 0.5s ease;  
 }  
@@ -34,8 +34,9 @@ body {
   z-index: 9999;  
 }  
 .card {  
-  width: min(720px, 92vw);  
-  padding: 26px 22px;  
+  width: 100%;  
+  max-width: 720px;  
+  padding: 20px;  
   background: var(--card);  
   backdrop-filter: blur(10px);  
   border-radius: 22px;  
@@ -49,22 +50,22 @@ body {
   filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));  
 }  
 h1 {  
-  font-size: clamp(26px, 4vw, 44px);  
+  font-size: clamp(22px, 5vw, 36px);  
   margin: 12px 0 18px;  
 }  
 .button-zone {  
-  position: relative;  
-  width: min(520px, 92%);  
-  height: 150px;  
-  margin: 0 auto;  
-  touch-action: none;  
+  display: flex;  
+  flex-wrap: wrap;  
+  justify-content: center;  
+  gap: 16px;  
+  width: 100%;  
+  margin: 20px 0;  
 }  
 button {  
-  position: absolute;  
-  top: 50%;  
-  transform: translateY(-50%);  
-  padding: 16px 24px;  
-  font-size: 18px;  
+  flex: 1 1 auto;  
+  min-width: 100px;  
+  padding: 14px 18px;  
+  font-size: clamp(16px, 4vw, 20px);  
   font-weight: 800;  
   border-radius: 999px;  
   border: none;  
@@ -74,24 +75,35 @@ button {
   -webkit-tap-highlight-color: transparent;  
   transition: transform .12s ease, background .12s ease;  
 }  
-#yesBtn { left: 18%; background: var(--yes); color: #fff; }  
+#yesBtn { background: var(--yes); color: #fff; }  
 #yesBtn:hover { background: var(--yesHover); }  
-#noBtn { left: 62%; background: #e5e7eb; color: #111827; }  
-.hint { margin-top: 10px; font-size: 13px; opacity: .7; }  
-.result { display: none; margin-top: 18px; animation: pop .35s ease; }  
-.result h2 { font-size: clamp(30px, 4.5vw, 46px); margin: 10px 0; }  
+#noBtn { background: #e5e7eb; color: #111827; }  
+.hint {  
+  margin-top: 10px;  
+  font-size: clamp(14px, 3vw, 16px);  
+  opacity: .7;  
+}  
+.result {  
+  display: none;  
+  margin-top: 18px;  
+  animation: pop .35s ease;  
+}  
+.result h2 {  
+  font-size: clamp(26px, 5vw, 40px);  
+  margin: 10px 0;  
+}  
 .fireworks {  
-  width: min(380px, 90vw);  
+  width: min(320px, 90vw);  
   margin: 0 auto;  
   display: block;  
 }  
 #surpriseBtn {  
-  position: relative;  
   margin-top: 20px;  
   background: purple;  
   color: white;  
   padding: 14px 20px;  
   border-radius: 20px;  
+  font-size: clamp(16px, 4vw, 20px);  
 }  
 #surpriseContent {  
   display: none;  
@@ -104,6 +116,21 @@ button {
 @keyframes pop {  
   from { transform: scale(.96); opacity: 0; }  
   to { transform: scale(1); opacity: 1; }  
+}  
+  
+/* Mobile adjustments */  
+@media (max-width: 600px) {  
+  .card {  
+    padding: 16px;  
+  }  
+  .button-zone {  
+    flex-direction: column;  
+    align-items: center;  
+  }  
+  button {  
+    width: 80%;  
+    font-size: 18px;  
+  }  
 }  
 </style>  
 </head>  
@@ -180,7 +207,7 @@ function fullScreenConfetti() {
 let yesScale = 1;  
 function growYes() {  
   yesScale = Math.min(2.2, yesScale + 0.1);  
-  yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;  
+  yesBtn.style.transform = `scale(${yesScale})`;  
 }  
   
 function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }  
@@ -197,7 +224,6 @@ function moveNo(px, py) {
   newTop = clamp(newTop, 0, z.height - b.height);  
   noBtn.style.left = newLeft + "px";  
   noBtn.style.top = newTop + "px";  
-  noBtn.style.transform = "none";  
   growYes();  
 }  
   
@@ -220,7 +246,6 @@ surpriseBtn.addEventListener("click", () => {
   surpriseContent.style.display = "block";  
   document.body.style.background = "pink";  
   
-  // Hearts shower  
   const heartEnd = Date.now() + 3000;  
   (function heartsFrame() {  
     confettiInstance({  
