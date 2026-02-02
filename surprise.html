@@ -41,6 +41,8 @@ img {
 <body>  
 <canvas id="confettiCanvas"></canvas>  
 <h1>💖 You are my everything 💖</h1>  
+  
+<!-- Your GitHub raw image link here -->  
 <img src="https://raw.githubusercontent.com/gagandeepsinghtuteja155/proposal/7df7663029d04282108730d501dfaf29aad58d5d/81A15106-00F4-4ECB-99AD-AE0BB6017E2E.png" alt="Romantic Surprise" />  
   
 <script>  
@@ -54,38 +56,31 @@ function resizeCanvas() {
 resizeCanvas();  
 window.addEventListener("resize", resizeCanvas);  
   
-// Create confetti instance  
 const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });  
   
-// Create a custom heart shape for confetti  
+// Create a custom heart shape  
 confetti.shapeFromPath({  
   name: 'heart',  
-  path: 'M10 30 A20 20 0 0 1 50 30 Q50 60 30 80 Q10 60 10 30 Z', // SVG path for heart  
-  // Scale factor to make hearts visible  
+  path: 'M10 30 A20 20 0 0 1 50 30 Q50 60 30 80 Q10 60 10 30 Z',  
   scale: 0.3  
 });  
   
-// Function to shower hearts  
+// Shower hearts continuously  
 function heartShower() {  
-  const duration = 5000;  
-  const end = Date.now() + duration;  
-  
   (function frame() {  
     confettiInstance({  
       particleCount: 3,  
       angle: 90,  
       spread: 60,  
       origin: { x: Math.random(), y: 0 },  
-      shapes: ['heart'], // use our custom heart shape  
+      shapes: ['heart'],  
       colors: ['#ff4d7d', '#ff1f68', '#ff7aa2']  
     });  
-    if (Date.now() < end) {  
-      requestAnimationFrame(frame);  
-    }  
+    requestAnimationFrame(frame);  
   })();  
 }  
   
-// Start the heart animation immediately  
+// Start the animation  
 heartShower();  
 </script>  
 </body>  
