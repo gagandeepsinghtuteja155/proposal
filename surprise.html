@@ -1,0 +1,92 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8" />  
+<meta name="viewport" content="width=device-width, initial-scale=1" />  
+<title>Surprise for You ❤️</title>  
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>  
+<style>  
+body {  
+  margin: 0;  
+  height: 100vh;  
+  background: pink;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  flex-direction: column;  
+  font-family: Arial, sans-serif;  
+  overflow: hidden;  
+}  
+h1 {  
+  font-size: clamp(28px, 5vw, 40px);  
+  color: white;  
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);  
+  text-align: center;  
+  padding: 0 10px;  
+}  
+img {  
+  max-width: 90%;  
+  border-radius: 20px;  
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);  
+  margin-top: 20px;  
+}  
+#confettiCanvas {  
+  position: fixed;  
+  inset: 0;  
+  pointer-events: none;  
+  z-index: 999;  
+}  
+</style>  
+</head>  
+<body>  
+<canvas id="confettiCanvas"></canvas>  
+<h1>💖 You are my everything 💖</h1>  
+<img src="https://i.imgur.com/7b6QF3z.jpeg" alt="Romantic Surprise" />  
+  
+<script>  
+// Confetti canvas setup  
+const confettiCanvas = document.getElementById("confettiCanvas");  
+function resizeCanvas() {  
+  const dpr = Math.max(1, window.devicePixelRatio || 1);  
+  confettiCanvas.width = Math.floor(window.innerWidth * dpr);  
+  confettiCanvas.height = Math.floor(window.innerHeight * dpr);  
+}  
+resizeCanvas();  
+window.addEventListener("resize", resizeCanvas);  
+  
+// Create confetti instance  
+const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });  
+  
+// Create a custom heart shape for confetti  
+confetti.shapeFromPath({  
+  name: 'heart',  
+  path: 'M10 30 A20 20 0 0 1 50 30 Q50 60 30 80 Q10 60 10 30 Z', // SVG path for heart  
+  // Scale factor to make hearts visible  
+  scale: 0.3  
+});  
+  
+// Function to shower hearts  
+function heartShower() {  
+  const duration = 5000;  
+  const end = Date.now() + duration;  
+  
+  (function frame() {  
+    confettiInstance({  
+      particleCount: 3,  
+      angle: 90,  
+      spread: 60,  
+      origin: { x: Math.random(), y: 0 },  
+      shapes: ['heart'], // use our custom heart shape  
+      colors: ['#ff4d7d', '#ff1f68', '#ff7aa2']  
+    });  
+    if (Date.now() < end) {  
+      requestAnimationFrame(frame);  
+    }  
+  })();  
+}  
+  
+// Start the heart animation immediately  
+heartShower();  
+</script>  
+</body>  
+</html>  
